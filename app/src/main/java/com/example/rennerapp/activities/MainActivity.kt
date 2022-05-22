@@ -18,7 +18,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private val itemAdapter by lazy {
         ItemAdapter { position: Int, item: Product ->
-            Toast.makeText(this@MainActivity, "Pos ${item.name}", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this@MainActivity, "Pos ${item.name}", Toast.LENGTH_LONG).show()
             val intent = Intent(this, ProductDetailsActivity::class.java)
             //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("product", item)
@@ -29,7 +29,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private val itemAdapter2 by lazy {
         ItemAdapter { position: Int, item: Product ->
-            Toast.makeText(this@MainActivity, "Pos ${item.name}", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this@MainActivity, "Pos ${item.name}", Toast.LENGTH_LONG).show()
             val intent = Intent(this, ProductDetailsActivity::class.java)
             //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("product", item)
@@ -78,7 +78,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         item_list02.setViewsToChangeColor(listOf(R.id.list_item_background, R.id.list_item_text))
         itemAdapter2.setItems(getLargeListOfItems())
 
+        bot_nav_bar.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.bot_nav_user -> gotoUserSetting()
+                else -> { gotoUserHome() }
+            }
 
+        }
+
+    }
+
+    private fun gotoUserHome(): Boolean {
+        return true
+    }
+
+    private fun gotoUserSetting(): Boolean {
+        val intent = Intent(this, UserSettingsActivity::class.java)
+        startActivity(intent)
+        return true
     }
 
     private fun getLargeListOfItems(): List<Product> {
@@ -115,10 +132,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_my_profile -> {
-                Toast.makeText(this@MainActivity, "Meu perfil", Toast.LENGTH_LONG)
+//                Toast.makeText(this@MainActivity, "Meu perfil", Toast.LENGTH_LONG)
+                val intent = Intent(this, UserSettingsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
             R.id.nav_signout -> {
-                Toast.makeText(this@MainActivity, "Logout", Toast.LENGTH_LONG)
+//                Toast.makeText(this@MainActivity, "Logout", Toast.LENGTH_LONG)
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
